@@ -85,29 +85,42 @@ export function calculateGPA(
 }
 
 export function predictedGradeNeeded(
-  currentGPA: number,
   targetGPA: number,
-  courses: Course[],
+  remainingCourses: Course[],
+  completedCourses: Course[] = [],
   gradeScale: GradeScale[] = DEFAULT_GRADE_SCALE
 ): number {
-  if (currentGPA >= targetGPA) return 0;
+  if (remainingCourses.length === 0) return 0;
 
-  const gpaDifference = targetGPA - currentGPA;
-  const pointsNeeded = gpaDifference * courses.length;
-  const maxPoints = courses.length * 4.0;
+  const completedActive = completedCourses.filter((c) => !c.excluded);
+  const remainingActive = remainingCourses.filter((c) => !c.excluded);
 
-  if (pointsNeeded > maxPoints) return 101;
+  let completedPoints = 0;
+  let completedWeight = 0;
+  completedActive.forEach((c) => {
+    const w = (c.credits / 4) * c.weight;
+    completedPoints += getGradePoints(c.grade, gradeScale) * w;
+    completedWeight += w;
+  });
 
-  const averageNeeded = pointsNeeded / courses.length;
-  
-  //find corresponding grade
-  for (let grade = 100; grade >= 0; grade--) {
-    if (getGradePoints(grade, gradeScale) >= averageNeeded) {
-      return grade;
-    }
+  let remainingWeight = 0;
+  remainingActive.forEach((c) => {
+    remainingWeight += (c.credits / 4) * c.weight;
+  });
+
+  if (remainingWeight === 0) return 0;
+
+  const totalWeight = completedWeight + remainingWeight;
+  const requiredAvgPoints =
+    (targetGPA * totalWeight - completedPoints) / remainingWeight;
+
+  if (requiredAvgPoints <= 0) return 0;
+  if (requiredAvgPoints > 4.0) return 101;
+
+  for (let grade = 0; grade <= 100; grade++) {
+    if (getGradePoints(grade, gradeScale) >= requiredAvgPoints) return grade;
   }
-
-  return 0;
+  return 101;
 }
 
 export function whatIfScenario(

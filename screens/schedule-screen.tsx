@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ClassPeriod, getScheduleForDay, getCurrentPeriod, getNextPeriod } from '../utils/schedule-data';
@@ -19,6 +20,7 @@ export default function ScheduleScreen() {
   const creds = useCreds();
   const { currentTheme } = useTheme();
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [fullSchedule, setFullSchedule] = useState<ClassPeriod[]>([]);
   const [dayType, setDayType] = useState<'A' | 'B'>('A');
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -45,6 +47,12 @@ export default function ScheduleScreen() {
     }
   };
 
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await loadSchedule();
+    setRefreshing(false);
+  };
+
   const schedule = getScheduleForDay(fullSchedule, dayType);
   const currentPeriod = getCurrentPeriod(schedule, currentTime);
   const nextPeriod = getNextPeriod(schedule, currentTime);
@@ -58,7 +66,12 @@ export default function ScheduleScreen() {
   }
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: currentTheme.background }]}>
+    <ScrollView
+      style={[styles.container, { backgroundColor: currentTheme.background }]}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={currentTheme.primary} />
+      }
+    >
       <View style={[styles.dayToggle, { backgroundColor: currentTheme.surface, borderBottomColor: currentTheme.border }]}>
         {(['A', 'B'] as const).map((day) => (
           <TouchableOpacity

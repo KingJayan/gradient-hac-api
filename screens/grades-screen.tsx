@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   SafeAreaView,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
@@ -24,6 +25,7 @@ export default function GradesScreen() {
   if (!authContext) return null;
 
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [grades, setGrades] = useState<GradeEntry[]>([]);
   const [expandedClass, setExpandedClass] = useState<string | null>(null);
@@ -33,6 +35,12 @@ export default function GradesScreen() {
       loadData();
     }, [creds])
   );
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await loadData();
+    setRefreshing(false);
+  };
 
   const loadData = async () => {
     if (!creds) return;
@@ -108,7 +116,13 @@ export default function GradesScreen() {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: currentTheme.background }]}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={currentTheme.primary} />
+        }
+      >
         <View style={[styles.header, { backgroundColor: currentTheme.surface }]}>
           <Text style={[styles.title, { color: currentTheme.text }]}>Your Grades</Text>
           <Text style={[styles.subtitle, { color: currentTheme.textSecondary }]}>

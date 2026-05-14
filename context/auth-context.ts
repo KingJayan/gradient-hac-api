@@ -10,7 +10,6 @@ export interface Student {
 }
 
 export interface AuthState {
-  isLoading: boolean;
   isLoggedOut: boolean;
   userToken: string | null;
   user: Student | null;

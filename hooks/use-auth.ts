@@ -9,7 +9,6 @@ type AuthAction =
   | { type: 'SIGN_OUT' };
 
 const initialState: AuthState = {
-  isLoading: true,
   isLoggedOut: false,
   userToken: null,
   user: null,
@@ -18,22 +17,14 @@ const initialState: AuthState = {
 function authReducer(state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
     case 'RESTORE_TOKEN':
-      return {
-        isLoading: false,
-        isLoggedOut: false,
-        userToken: action.payload.token,
-        user: action.payload.user,
-      };
     case 'SIGN_IN':
       return {
-        isLoading: false,
         isLoggedOut: false,
         userToken: action.payload.token,
         user: action.payload.user,
       };
     case 'SIGN_OUT':
       return {
-        isLoading: false,
         isLoggedOut: true,
         userToken: null,
         user: null,
@@ -55,11 +46,9 @@ export function useAuth() {
       ]);
 
       if (token && userJson && password) {
-        // password stays in SecureStore, not loaded into state
         const user = JSON.parse(userJson);
         dispatch({ type: 'RESTORE_TOKEN', payload: { token, user } });
       } else {
-        // missing any credential — require fresh login
         dispatch({ type: 'SIGN_OUT' });
       }
     } catch (e) {
@@ -76,9 +65,7 @@ export function useAuth() {
       if (!response.ok) throw new Error('Invalid credentials');
       const data = await response.json();
 
-      // generate secure random token (no PII embedded)
       const token = `token-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
-      // password stored separately in SecureStore — not in user object
       const user: Student = { id: username, username, hacUrl, name: data.name };
 
       await SecureStore.setItemAsync('userToken', token);
