@@ -69,7 +69,7 @@ export default function LoginScreen() {
       >
         <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
           <View style={styles.logoContainer}>
-            <Ionicons name="gradient" size={48} color={currentTheme.primary} />
+            <Ionicons name="school" size={48} color={currentTheme.primary} />
           </View>
           <Text style={[styles.title, { color: currentTheme.primary }]}>Gradient</Text>
           <Text style={[styles.subtitle, { color: currentTheme.textSecondary }]}>Your grades, visualized</Text>

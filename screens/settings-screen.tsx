@@ -50,7 +50,14 @@ export default function SettingsScreen() {
               return (
                 <TouchableOpacity
                   key={theme}
-                  style={getThemeOptionStyle(theme, themeColor)}
+                  style={[
+                    styles.themeOption,
+                    {
+                      backgroundColor: themeColor,
+                      borderWidth: themeName === theme ? 2 : 0,
+                      borderColor: currentTheme.text,
+                    },
+                  ]}
                   onPress={() => handleThemeChange(theme)}
                 >
                   <Text style={styles.themeOptionText}>
@@ -104,7 +111,7 @@ export default function SettingsScreen() {
 
         <View style={styles.section}>
           <TouchableOpacity
-            style={logoutButtonStyle}
+            style={[styles.logoutButton, { backgroundColor: '#EF4444' }]}
             onPress={handleLogout}
           >
             <Ionicons name="log-out" size={20} color="#fff" />

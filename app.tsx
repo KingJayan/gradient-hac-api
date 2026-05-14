@@ -19,6 +19,8 @@ import SettingsScreen from './screens/settings-screen';
 import GPACalculatorScreen from './screens/gpa-calculator-screen';
 import ScheduleScreen from './screens/schedule-screen';
 import EmailTeachersScreen from './screens/email-teachers-screen';
+import TranscriptScreen from './screens/transcript-screen';
+import AttendanceScreen from './screens/attendance-screen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -29,8 +31,7 @@ function AuthStack() {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        animationEnabled: true,
-        cardStyle: { backgroundColor: currentTheme.background },
+        contentStyle: { backgroundColor: currentTheme.background },
       }}
     >
       <Stack.Screen name="Login" component={LoginScreen} />
@@ -44,7 +45,7 @@ function AppTabs() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
-          let iconName: keyof typeof Ionicons.glyphMap;
+          let iconName: keyof typeof Ionicons.glyphMap = 'ellipse-outline';
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Grades') {
@@ -86,6 +87,22 @@ function AppTabs() {
   );
 }
 
+function AppStack() {
+  const { currentTheme } = useTheme();
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: currentTheme.background },
+      }}
+    >
+      <Stack.Screen name="Tabs" component={AppTabs} />
+      <Stack.Screen name="Transcript" component={TranscriptScreen} options={{ presentation: 'modal' }} />
+      <Stack.Screen name="Attendance" component={AttendanceScreen} options={{ presentation: 'modal' }} />
+    </Stack.Navigator>
+  );
+}
+
 function RootNavigatorContent() {
   const { state, bootstrapAsync, login, logout } = useAuth();
   const { currentTheme } = useTheme();
@@ -100,10 +117,13 @@ function RootNavigatorContent() {
 
   return (
     // single auth instance distributed to all children via context
+    // DataProvider must be inside AuthContext so useCreds() resolves to the live user
     <AuthContext.Provider value={{ state, bootstrapAsync, login, logout }}>
-      <NavigationContainer>
-        {state.isLoggedOut ? <AuthStack /> : <AppTabs />}
-      </NavigationContainer>
+      <DataProvider>
+        <NavigationContainer>
+          {state.isLoggedOut ? <AuthStack /> : <AppStack />}
+        </NavigationContainer>
+      </DataProvider>
     </AuthContext.Provider>
   );
 }
@@ -112,9 +132,7 @@ export default function RootNavigator() {
   return (
     <ErrorBoundary>
       <ThemeProvider>
-        <DataProvider>
-          <RootNavigatorContent />
-        </DataProvider>
+        <RootNavigatorContent />
       </ThemeProvider>
     </ErrorBoundary>
   );

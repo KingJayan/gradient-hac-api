@@ -339,12 +339,18 @@ export async function fetchTranscript(
 export async function fetchAttendance(
   hacUrl: string, username: string, password: string
 ): Promise<AttendanceRecord[]> {
-  const raw = await apiFetch('report-card', hacUrl, username, password);
+  let raw: unknown;
+  try {
+    raw = await apiFetch('report-card', hacUrl, username, password);
+  } catch (e) {
+    logWarning('attendance unavailable', { error: (e as Error).message });
+    return [];
+  }
   const list: unknown[] = (isObject(raw) && Array.isArray(raw.attendance)) ? raw.attendance : toArray(raw);
 
   return list
     .filter((r): r is { date: unknown; status: unknown; reason?: unknown } => 
-      isObject(r) && r.date && r.status
+      isObject(r) && !!r.date && !!r.status
     )
     .map((r) => ({
       date: safeString(r.date),

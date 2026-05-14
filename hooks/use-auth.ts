@@ -71,16 +71,15 @@ export function useAuth() {
   const login = useCallback(
     async (username: string, password: string, hacUrl: string) => {
       const response = await fetch(
-        `https://homeaccesscenterapi.vercel.app/api/name?link=${encodeURIComponent(hacUrl)}&user=${username}&pass=${password}`
+        `https://homeaccesscenterapi.vercel.app/api/name?link=${encodeURIComponent(hacUrl)}&user=${encodeURIComponent(username)}&pass=${encodeURIComponent(password)}`
       );
-      const data = await response.json();
-
       if (!response.ok) throw new Error('Invalid credentials');
+      const data = await response.json();
 
       // generate secure random token (no PII embedded)
       const token = `token-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
       // password stored separately in SecureStore — not in user object
-      const user = { username, hacUrl, name: data.name };
+      const user: Student = { id: username, username, hacUrl, name: data.name };
 
       await SecureStore.setItemAsync('userToken', token);
       await SecureStore.setItemAsync('user', JSON.stringify(user));
