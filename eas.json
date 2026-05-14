@@ -1,0 +1,35 @@
+{
+  "build": {
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "buildType": "simulator"
+      }
+    },
+    "preview2": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease"
+      }
+    },
+    "preview3": {
+      "developmentClient": true
+    },
+    "production": {
+      "ios": {
+        "buildType": "archive"
+      }
+    }
+  },
+  "cli": {
+    "version": ">= 5.4.0"
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "ascAppId": "your-app-store-connect-id"
+      }
+    }
+  }
+}
