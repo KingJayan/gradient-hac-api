@@ -1,10 +1,8 @@
 {
-	"rewrites":
-	[
-		{
-			"source":"/(.*)",
-			"destination":"/api/entrypoint.go"
-		}
-	]
-
+  "builds": [
+    { "src": "api/entrypoint.go", "use": "@vercel/go" }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/entrypoint.go" }
+  ]
 }
