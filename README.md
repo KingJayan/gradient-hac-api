@@ -1,30 +1,27 @@
-# HomeaccessCenterAPIv2
+# gradient HAC API
 
-HomeaccessCenterAPIv2 is an improved API that scrapes HomeaccessCenter for data. It is written in Go and offers faster performance compared to v1.
+Self-hosted fork of [HomeAccessCenterAPI](https://github.com/nitheesh-cpu/HomeAccessCenterAPI-Golang) (MIT) used by the Gradient app. Scrapes HAC via Go + colly and runs as a Vercel serverless function.
 
-## Documentation
+## Why a fork
 
-The API documentation is available at [https://homeaccesscenterapi-docs.vercel.app/](https://homeaccesscenterapi-docs.vercel.app/). It provides detailed information about the available endpoints, request/response formats, and usage examples.
+Upstream accepted credentials via query string (`?user=&pass=`), which leaks plaintext passwords to access logs, CDN edges, and `Referer` headers. This fork:
 
-## API Endpoint
+- **POST-only** for any endpoint that takes credentials.
+- Accepts credentials via **POST form body**, **JSON body**, or **HTTP Basic Auth** (`Authorization: Basic …`).
+- Query-string credentials are no longer read.
 
-The API can be accessed at [https://homeaccesscenterapi.vercel.app/api/](https://homeaccesscenterapi.vercel.app/api/). Please refer to the documentation for the available endpoints and their purposes.
+## Endpoints
 
-## Performance Comparison
+`POST /api/{name|assignments|info|averages|classes|reportcard|ipr|transcript|rank}`
 
-The following table compares the performance of Python and Go for each endpoint:
+Body fields (form or JSON): `user`, `pass`, `link` (defaults to `https://homeaccess.katyisd.org`).
 
-| Endpoint       | Python (v1) | Go (v2) |
-|----------------|-------------|---------|
-| /info          | 1800 ms     | 1500 ms |
-| /rank          | 2000 ms     | 1500 ms |
-| /transcript    | 2100 ms     | 1500 ms |
-| /name          | 2400 ms     | 1500 ms |
-| /ipr           | 2600 ms     | 2000 ms |
-| /reportcard    | 3200 ms     | 2700 ms |
-| /averages      | 3800 ms     | 3300 ms |
-| /classes       | 3900 ms     | 3300 ms |
-| /assignments   | 3900 ms     | 3300 ms |
+`GET /api/help` lists routes. `GET /api/admin` is a health check.
 
+## Data flow disclosure
 
-The measurements represent the average response time for each endpoint. As you can see, the Go version (v2) of the API outperforms the Python version (v1) in terms of response time. It provides faster and more efficient performance, allowing for quicker retrieval of grades, attendance, assignments, and schedule information.
+This API receives plaintext HAC credentials on every authenticated request. They are used only to log in to the user's district HAC instance and are not persisted server-side. The Gradient app talks only to a deployment of this code that the project maintainers control; it does not send credentials to the upstream `homeaccesscenterapi.vercel.app`.
+
+## License
+
+MIT, inherited from upstream.
