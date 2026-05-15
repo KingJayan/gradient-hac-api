@@ -10,17 +10,17 @@ import { ErrorBoundary } from './components/error-boundary';
 import { useAuth } from './hooks/use-auth';
 import { useTheme } from './hooks/use-theme';
 
-import LoadingScreen from './screens/loading-screen';
-import LoginScreen from './screens/login-screen';
-import HomeScreen from './screens/home-screen';
-import GradesScreen from './screens/grades-screen';
-import PlannerScreen from './screens/planner-screen';
-import SettingsScreen from './screens/settings-screen';
-import GPACalculatorScreen from './screens/gpa-calculator-screen';
-import ScheduleScreen from './screens/schedule-screen';
-import EmailTeachersScreen from './screens/email-teachers-screen';
-import TranscriptScreen from './screens/transcript-screen';
-import AttendanceScreen from './screens/attendance-screen';
+import LoadingScreen from './screens/loading';
+import LoginScreen from './screens/login';
+import HomeScreen from './screens/home';
+import GradesScreen from './screens/grades';
+import PlannerScreen from './screens/planner';
+import SettingsScreen from './screens/settings';
+import GPACalculatorScreen from './screens/gpa-calc';
+import ScheduleScreen from './screens/schedule';
+import EmailTeachersScreen from './screens/email-teachers';
+import TranscriptScreen from './screens/transcript';
+import AttendanceScreen from './screens/attendance';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

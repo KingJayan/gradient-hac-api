@@ -18,7 +18,7 @@ npm install
 npm start         # press `i` for ios simulator
 ```
 
-sign in with your district's HAC url, username, and password. four districts are preset; add more in [screens/login-screen.tsx](screens/login-screen.tsx).
+sign in with your district's HAC url, username, and password. four districts are preset; add more in [screens/login.tsx](screens/login.tsx).
 
 ## scripts
 

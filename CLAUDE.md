@@ -114,7 +114,7 @@ All `Animated.Value` instances are wrapped in `useRef` to survive re-renders. Us
 ## Guidelines
 
 ### New screen
-1. Create `screens/new-screen.tsx`.
+1. Create `screens/[name].tsx`.
 2. Use `useCreds()` guard.
 3. Follow the screen data pattern above.
 4. Register in `AppTabs` or as a stack screen in `AppStack`.
