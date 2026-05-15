@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/auth-context';
 import * as SecureStore from 'expo-secure-store';
+import { logError } from '../utils/error-logger';
 
 export interface Creds {
   hacUrl: string;
@@ -8,8 +9,6 @@ export interface Creds {
   password: string;
 }
 
-// returns null when the user is not logged in or password unavailable
-// password fetched directly from SecureStore on-demand, never kept in memory
 export function useCreds(): Creds | null {
   const ctx = useContext(AuthContext);
   const u = ctx?.state.user;
@@ -20,7 +19,12 @@ export function useCreds(): Creds | null {
       setPassword(null);
       return;
     }
-    SecureStore.getItemAsync('userPass').then(setPassword);
+    SecureStore.getItemAsync('userPass')
+      .then(setPassword)
+      .catch((e) => {
+        logError(e as Error, { action: 'useCreds.getUserPass' });
+        ctx?.logout();
+      });
   }, [u]);
 
   if (!u || !password) return null;

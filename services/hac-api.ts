@@ -72,8 +72,9 @@ async function apiFetch(endpoint: string, hacUrl: string, username: string, pass
       logWarning('Network error in apiFetch', { endpoint, error: (e as Error).message });
       throw networkError;
     }
-    const wrappedError = new HACError(`Failed to load ${endpoint}: ${(e as Error).message}`);
-    logError(e as Error, { endpoint, hacUrl });
+    const sanitized = (e as Error).message.replace(/pass=[^&\s]*/gi, 'pass=***');
+    const wrappedError = new HACError(`Failed to load ${endpoint}: ${sanitized}`);
+    logError(new Error(sanitized), { endpoint });
     throw wrappedError;
   }
 }

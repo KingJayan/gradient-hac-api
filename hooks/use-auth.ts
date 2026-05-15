@@ -65,7 +65,7 @@ export function useAuth() {
       if (!response.ok) throw new Error('Invalid credentials');
       const data = await response.json();
 
-      const token = `token-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+      const token = '1';
       const user: Student = { id: username, username, hacUrl, name: data.name };
 
       await SecureStore.setItemAsync('userToken', token);
