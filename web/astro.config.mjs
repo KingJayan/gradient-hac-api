@@ -6,8 +6,9 @@ export default defineConfig({
     starlight({
       title: 'gradient HAC API',
       description: 'Documentation for the gradient Home Access Center API.',
+      site: 'https://gradient-hac-api-docs.vercel.app',
       social: [
-        { icon: 'github', label: 'GitHub', href: 'https://github.com/nitheesh-cpu/HomeAccessCenterAPI-Golang' },
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/KingJayan/gradient-hac-api' },
       ],
       sidebar: [
         {
