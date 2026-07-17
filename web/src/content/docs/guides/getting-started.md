@@ -47,9 +47,8 @@ curl -X POST https://your-deployment.vercel.app/api/averages \
 `link` can also be sent as the `X-HAC-Link` header.
 
 :::caution
-If you omit `link`, the API falls back to `https://homeaccess.roundrockisd.org`,
-which is **not** a working host for any district — including Round Rock, whose
-HAC lives at `accesscenter.roundrockisd.org`. Treat `link` as required.
+If you omit `link`, the API falls back to `https://accesscenter.roundrockisd.org`,
+which is **not** a working host for any other district. Treat `link` as required.
 :::
 
 ## Utility routes

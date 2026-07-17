@@ -58,7 +58,7 @@ func getCreds(c *gin.Context) creds {
 		cr.link = c.GetHeader("X-HAC-Link")
 	}
 	if cr.link == "" {
-		cr.link = "https://homeaccess.roundrockisd.org"
+		cr.link = "https://accesscenter.roundrockisd.org"
 	}
 	cr.link = strings.TrimSuffix(cr.link, "/")
 	return cr
