@@ -10,6 +10,7 @@ Returns every transcript group (year + semester) plus cumulative GPA, rank, and 
 
 ```bash
 curl -X POST https://your-deployment.vercel.app/api/transcript \
+  -H "X-HAC-Link: https://accesscenter.roundrockisd.org" \
   -u STUDENT_ID:PASSWORD
 ```
 

@@ -10,6 +10,7 @@ Returns every class with its average, assignment rows, and category rows.
 
 ```bash
 curl -X POST https://your-deployment.vercel.app/api/assignments \
+  -H "X-HAC-Link: https://accesscenter.roundrockisd.org" \
   -u STUDENT_ID:PASSWORD
 ```
 

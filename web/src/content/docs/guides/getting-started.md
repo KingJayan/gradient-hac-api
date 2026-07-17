@@ -10,7 +10,8 @@ All data endpoints are `POST` and take Home Access Center credentials in the req
 ```bash
 curl -X POST https://your-deployment.vercel.app/api/averages \
   -d user=STUDENT_ID \
-  -d pass=PASSWORD
+  -d pass=PASSWORD \
+  -d link=https://accesscenter.roundrockisd.org
 ```
 
 Response:
@@ -22,18 +23,34 @@ Response:
 }
 ```
 
-## Other districts
+## Choosing your district
 
-The API defaults to `https://homeaccess.roundrockisd.org`. For another district, pass its HAC base URL as `link`:
+Always pass your district's HAC base URL as `link`. Every district hosts its own
+Home Access Center on a different domain, so the value that works for you depends
+entirely on your school — there is no single URL that works everywhere.
+
+To find yours, open Home Access Center in a browser and copy the scheme + host
+from the address bar (everything before `/HomeAccess/...`). A few examples:
+
+| District | `link` |
+| --- | --- |
+| Round Rock ISD | `https://accesscenter.roundrockisd.org` |
+| Katy ISD | `https://homeaccess.katyisd.org` |
 
 ```bash
 curl -X POST https://your-deployment.vercel.app/api/averages \
   -d user=STUDENT_ID \
   -d pass=PASSWORD \
-  -d link=https://homeaccess.katyisd.org
+  -d link=https://accesscenter.roundrockisd.org
 ```
 
 `link` can also be sent as the `X-HAC-Link` header.
+
+:::caution
+If you omit `link`, the API falls back to `https://homeaccess.roundrockisd.org`,
+which is **not** a working host for any district — including Round Rock, whose
+HAC lives at `accesscenter.roundrockisd.org`. Treat `link` as required.
+:::
 
 ## Utility routes
 

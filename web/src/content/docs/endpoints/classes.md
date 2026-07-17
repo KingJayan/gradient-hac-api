@@ -10,6 +10,7 @@ Returns the student's current class names.
 
 ```bash
 curl -X POST https://your-deployment.vercel.app/api/classes \
+  -H "X-HAC-Link: https://accesscenter.roundrockisd.org" \
   -u STUDENT_ID:PASSWORD
 ```
 

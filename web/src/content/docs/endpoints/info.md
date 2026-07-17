@@ -10,6 +10,7 @@ Returns student registration details.
 
 ```bash
 curl -X POST https://your-deployment.vercel.app/api/info \
+  -H "X-HAC-Link: https://accesscenter.roundrockisd.org" \
   -u STUDENT_ID:PASSWORD
 ```
 

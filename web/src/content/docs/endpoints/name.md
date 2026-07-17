@@ -10,6 +10,7 @@ Returns the logged-in student's name.
 
 ```bash
 curl -X POST https://your-deployment.vercel.app/api/name \
+  -H "X-HAC-Link: https://accesscenter.roundrockisd.org" \
   -u STUDENT_ID:PASSWORD
 ```
 

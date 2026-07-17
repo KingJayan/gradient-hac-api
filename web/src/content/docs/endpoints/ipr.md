@@ -10,6 +10,7 @@ Returns the interim progress report (IPR) as a headers row plus data rows.
 
 ```bash
 curl -X POST https://your-deployment.vercel.app/api/ipr \
+  -H "X-HAC-Link: https://accesscenter.roundrockisd.org" \
   -u STUDENT_ID:PASSWORD
 ```
 

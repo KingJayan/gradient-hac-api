@@ -10,6 +10,7 @@ Returns just the cumulative GPA block from the transcript page — faster than [
 
 ```bash
 curl -X POST https://your-deployment.vercel.app/api/rank \
+  -H "X-HAC-Link: https://accesscenter.roundrockisd.org" \
   -u STUDENT_ID:PASSWORD
 ```
 

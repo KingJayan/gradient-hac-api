@@ -10,6 +10,7 @@ Returns the report card as a headers array plus rows of cells.
 
 ```bash
 curl -X POST https://your-deployment.vercel.app/api/reportcard \
+  -H "X-HAC-Link: https://accesscenter.roundrockisd.org" \
   -u STUDENT_ID:PASSWORD
 ```
 

@@ -38,7 +38,7 @@ curl -X POST https://your-deployment.vercel.app/api/name \
 | --- | --- | --- |
 | `user` | form / JSON / Basic Auth | HAC username |
 | `pass` | form / JSON / Basic Auth | HAC password |
-| `link` | form / JSON / `X-HAC-Link` header | HAC base URL, defaults to `https://homeaccess.roundrockisd.org` |
+| `link` | form / JSON / `X-HAC-Link` header | Your district's HAC base URL (e.g. `https://accesscenter.roundrockisd.org`). Effectively required — see [Getting Started](/guides/getting-started/#choosing-your-district) |
 | `session` | JSON / `X-HAC-Session` header | Existing session cookies — see [Session Reuse](/guides/sessions/) |
 
 ## Data handling
