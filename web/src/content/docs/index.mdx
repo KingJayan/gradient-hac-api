@@ -1,0 +1,35 @@
+---
+title: gradient HAC API
+description: A Go API that scrapes Home Access Center — grades, assignments, transcripts, and more.
+template: splash
+hero:
+  tagline: A fast, credential-safe API for Home Access Center. Grades, assignments, report cards, transcripts, and rank — as JSON.
+  actions:
+    - text: Get Started
+      link: /guides/getting-started/
+      icon: right-arrow
+    - text: View Endpoints
+      link: /endpoints/averages/
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+  <Card title="POST-only credentials" icon="seti:lock">
+    Credentials are never accepted in query strings. Send them via POST form,
+    JSON body, or HTTP Basic Auth.
+  </Card>
+  <Card title="Session reuse" icon="rocket">
+    Log in once, then replay the `X-HAC-Session` header to skip the login
+    round-trip on every following request.
+  </Card>
+  <Card title="Any district" icon="setting">
+    Defaults to Round Rock ISD, but works with any district's HAC instance via
+    the `link` field.
+  </Card>
+  <Card title="Nothing persisted" icon="approve-check">
+    Credentials are used only to log in to your district's HAC and are never
+    stored server-side.
+  </Card>
+</CardGrid>
