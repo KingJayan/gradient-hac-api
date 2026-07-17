@@ -2,11 +2,11 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
+  site: 'https://gradient-hac-api-docs.vercel.app',
   integrations: [
     starlight({
       title: 'gradient HAC API',
       description: 'Documentation for the gradient Home Access Center API.',
-      site: 'https://gradient-hac-api-docs.vercel.app',
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/KingJayan/gradient-hac-api' },
       ],
