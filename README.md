@@ -14,7 +14,7 @@ Upstream accepted credentials via query string (`?user=&pass=`), which leaks pla
 
 `POST /api/{name|assignments|info|averages|classes|reportcard|ipr|transcript|rank}`
 
-Body fields (form or JSON): `user`, `pass`, `link` (defaults to `https://homeaccess.katyisd.org`).
+Body fields (form or JSON): `user`, `pass`, `link` (defaults to `https://homeaccess.roundrockisd.org`).
 
 `GET /api/help` lists routes. `GET /api/admin` is a health check.
 
