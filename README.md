@@ -4,22 +4,23 @@ Self-hosted fork of [HomeAccessCenterAPI](https://github.com/nitheesh-cpu/HomeAc
 
 ## Why a fork
 
-Upstream accepted credentials via query string (`?user=&pass=`), which leaks plaintext passwords to access logs, CDN edges, and `Referer` headers. This fork:
+Upstream used credentials via query string (`?user=&pass=`), which is not good for obvious security reasons.
 
-- **POST-only** for any endpoint that takes credentials.
-- Accepts credentials via **POST form body**, **JSON body**, or **HTTP Basic Auth** (`Authorization: Basic …`).
+This fork:
+- Is **POST-only** for any endpoint that takes credentials.
+- Accepts credentials via **POST form body**, **JSON body**, or **HTTP Basic Auth** (`Authorization: Basic …`)
 - Query-string credentials are no longer read.
 
 ## Endpoints
 
 `POST /api/{name|assignments|info|averages|classes|reportcard|ipr|transcript|rank}`
 
-Body fields (form or JSON): `user`, `pass`, `link` (defaults to `https://accesscenter.roundrockisd.org`).
+Body fields (form or JSON): `user`, `pass`, `link` (defaults to `https://accesscenter.roundrockisd.org`)
 
-`GET /api/help` lists routes. `GET /api/admin` is a health check.
+`GET /api/help` lists routes, `GET /api/admin` is a health check.
 
-Documentation of the api available [here](https://gradient-hac-api-docs.vercel.app)
+Documentation of the api available [here](https://gradient-hac-api-docs.vercel.app).
 
 ## License
 
-MIT, inherited from upstream.
+MIT, inherited from upstream
