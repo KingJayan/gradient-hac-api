@@ -1,4 +1,4 @@
-# gradient HAC API
+<h2><code>gradient</code> HAC API</h2>
 
 Self-hosted fork of [HomeAccessCenterAPI](https://github.com/nitheesh-cpu/HomeAccessCenterAPI-Golang) (MIT) used by the Gradient app. Scrapes HAC via Go + colly and runs as a Vercel serverless function.
 
